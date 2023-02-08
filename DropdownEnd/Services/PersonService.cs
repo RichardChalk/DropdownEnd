@@ -1,4 +1,5 @@
-﻿using SkysFormsDemo.Data;
+﻿using DropdownEnd.Data;
+using SkysFormsDemo.Data;
 
 namespace SkysFormsDemo.Services;
 
@@ -13,6 +14,11 @@ public class PersonService : IPersonService
     public IEnumerable<Person> GetPersons()
     {
         return _context.Person;
+    }
+
+    public IEnumerable<Country> GetCountries()
+    {
+        return _context.Countries;
     }
 
     public int SaveNew(Person person)

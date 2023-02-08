@@ -35,9 +35,11 @@
                 <span asp-validation-for="City" class="field-validation-error"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CountryCode">Country Code</label>
-                <input class="form-control" asp-for="CountryCode">
-                <span asp-validation-for="CountryCode" class="field-validation-error"></span>
+                <label asp-for="CountryId">Country</label>
+                <select asp-for="CountryId" asp-items="@Model.Countries">
+
+                </select>
+                <span asp-validation-for="CountryId" class="field-validation-error"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Salary">Lön</label>

@@ -1,4 +1,5 @@
 ﻿using BankAccountTransactionsEnd.Data;
+using DropdownEnd.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,24 @@ public class DataInitializer
     {
         _dbContext.Database.Migrate();
         SeedAccounts();
+        SeedCountries();
+    }
+
+    private void SeedCountries()
+    {
+        AddCountryIfDoesntExist("FI", "Finland");
+        AddCountryIfDoesntExist("DK", "Denmark");
+        AddCountryIfDoesntExist("NO", "Norway");
+        AddCountryIfDoesntExist("SE", "Sweden");
+    }
+    private void AddCountryIfDoesntExist(string code, string name)
+    {
+        if (_dbContext.Countries.Any(c => c.CountryCode == code)) return;
+        _dbContext.Countries.Add(new Country { 
+            CountryCode= code,
+            CountryName= name
+        });
+        _dbContext.SaveChanges();
     }
 
     private void SeedAccounts()

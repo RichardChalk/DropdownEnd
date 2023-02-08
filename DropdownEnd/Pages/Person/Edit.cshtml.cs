@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 using SkysFormsDemo.Services;
@@ -27,18 +28,30 @@ namespace SkysFormsDemo.Pages.Person
         [StringLength(50)][Required] public string City { get; set; }
         [StringLength(150)][EmailAddress] public string Email { get; set; }
 
+        public int CountryId { get; set; }
+        public List<SelectListItem> Countries { get; set; }
+
         public void OnGet(int personId)
         {
             var personDb = _personService.GetPerson(personId);
             Name = personDb.Name;
             Age = personDb.Age;
             City = personDb.City;
-            CountryCode = personDb.CountryCode;
+            // TODO
+            // CountryCode = personDb.CountryCode;
             Email = personDb.Email;
             PostalCode = personDb.PostalCode;
             Salary = personDb.Salary;
             StreetAddress = personDb.StreetAddress;
+            CountryId = personDb.Country.Id;
+            FillCountryList();
         }
+
+        private void FillCountryList()
+        {
+            
+        }
+
         public IActionResult OnPost(int personId)
         {
             if (ModelState.IsValid)
@@ -47,7 +60,8 @@ namespace SkysFormsDemo.Pages.Person
                 personDb.Name = Name;
                 personDb.Age = Age;
                 personDb.City = City;
-                personDb.CountryCode = CountryCode;
+                // TODO
+                // personDb.CountryCode = CountryCode;
                 personDb.Email = Email;
                 personDb.PostalCode = PostalCode;
                 Salary = personDb.Salary;

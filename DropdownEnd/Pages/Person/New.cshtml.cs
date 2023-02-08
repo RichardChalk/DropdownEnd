@@ -46,9 +46,21 @@ namespace SkysFormsDemo.Pages.Person
         [StringLength(150)]
         [EmailAddress]
         public string Email { get; set; }
+        public int CountryId { get; set; }
+        public List<SelectListItem> Countries { get; set; }
 
         public void OnGet()
         {
+            FillCountryList();
+        }
+
+        private void FillCountryList()
+        {
+            Countries = _personService.GetCountries().Select(c=> new SelectListItem
+            {
+                Text = c.CountryName, 
+                Value = c.Id.ToString()
+            }).ToList();
         }
 
         public IActionResult OnPost()
@@ -64,7 +76,8 @@ namespace SkysFormsDemo.Pages.Person
                     Salary = Salary,
                     Name = Name,
                     PostalCode = PostalCode,
-                    CountryCode = CountryCode,
+                    // TODO
+                    // CountryCode = CountryCode,
                 };
 
                 _personService.SaveNew(person);
