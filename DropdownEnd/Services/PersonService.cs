@@ -16,6 +16,11 @@ public class PersonService : IPersonService
         return _context.Person;
     }
 
+    public ApplicationDbContext GetDbContext()
+    {
+        return _context;
+    }
+
     public IEnumerable<Country> GetCountries()
     {
         return _context.Countries;

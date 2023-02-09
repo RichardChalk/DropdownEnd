@@ -30,8 +30,8 @@ namespace SkysFormsDemo.Pages.Person
         [StringLength(10)]
         public string PostalCode { get; set; }
 
-        [StringLength(2)]
-        public string CountryCode { get; set; }
+        //[StringLength(2)]
+        //public string CountryCode { get; set; }
 
         [Range(0, 100000, ErrorMessage = "Skriv ett tal mellan 0 och 100000")]
         public decimal Salary { get; set; }
@@ -46,6 +46,8 @@ namespace SkysFormsDemo.Pages.Person
         [StringLength(150)]
         [EmailAddress]
         public string Email { get; set; }
+
+        [Range(1,4, ErrorMessage = "Please choose a valid country!")]
         public int CountryId { get; set; }
         public List<SelectListItem> Countries { get; set; }
 
@@ -61,6 +63,13 @@ namespace SkysFormsDemo.Pages.Person
                 Text = c.CountryName, 
                 Value = c.Id.ToString()
             }).ToList();
+
+            // Lägg till Default val
+            Countries.Insert(0, new SelectListItem
+            {
+                Text = "Choose a country",
+                Value = "0"
+            });
         }
 
         public IActionResult OnPost()
@@ -76,13 +85,14 @@ namespace SkysFormsDemo.Pages.Person
                     Salary = Salary,
                     Name = Name,
                     PostalCode = PostalCode,
-                    // TODO
-                    // CountryCode = CountryCode,
+                    Country = _personService.GetCountries().First(c=>c.Id == CountryId),
                 };
 
                 _personService.SaveNew(person);
                 return RedirectToPage("Index");
             }
+
+            FillCountryList();
             return Page();
         }
     }
