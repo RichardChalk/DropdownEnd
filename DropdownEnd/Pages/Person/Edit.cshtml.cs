@@ -70,8 +70,8 @@ namespace SkysFormsDemo.Pages.Person
                 personDb.Country = _personService.GetCountries().First(c => c.Id == CountryId);
                 personDb.Email = Email;
                 personDb.PostalCode = PostalCode;
-                Salary = personDb.Salary;
-                StreetAddress = personDb.StreetAddress;
+                personDb.Salary = Salary;
+                personDb.StreetAddress = StreetAddress;
 
                 _personService.Update(personDb);
                 return RedirectToPage("Index");
